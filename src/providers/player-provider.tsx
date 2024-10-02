@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { Player } from "../entities/player";
 
 export const PlayerContext = createContext({
@@ -7,7 +7,17 @@ export const PlayerContext = createContext({
 });
 
 export function PlayerProvider({ children }: PropsWithChildren) {
-  const [player, setPlayer] = useState<Player>();
+  const [player, setPlayer] = useState(() => {
+    const player = localStorage.getItem("player");
+    if (player !== "undefined" && player !== null) {
+      return JSON.parse(player);
+    }
+    return undefined;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("player", JSON.stringify(player));
+  }, [player]);
 
   return (
     <PlayerContext.Provider value={{ player, setPlayer }}>

@@ -1,9 +1,5 @@
-export class Player {
-  constructor(name: string, inventory: string[]) {
-    this.name = name;
-    this.inventory = inventory;
-  }
+import { Character } from "./character";
 
-  public inventory: string[] = [];
-  public name: string = "";
+export class Player extends Character {
+  public xp = 0;
 }
